@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function ProductList() {
@@ -19,17 +19,16 @@ function ProductList() {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    LoadData();
+  }, []);
+
   console.log(product);
   return (
     <div className="w-full h-screen ">
-      <button
-        className="px-3 py-1 bg-red-300 my-4 border-2 rounded-md border-black"
-        onClick={() => LoadData()}
-      >
-        Add Data
-      </button>
       <div className="flex gap-10 flex-wrap justify-center bg-gray-300 py-3">
-        {product &&
+        {product ? (
           product.map((item, index) => (
             <div
               key={index}
@@ -46,7 +45,10 @@ function ProductList() {
               <hr />
               <h3 className="text-xl font-bold text-red-700">${item.price}</h3>
             </div>
-          ))}
+          ))
+        ) : (
+          <h1>Loading....</h1>
+        )}
       </div>
     </div>
   );
